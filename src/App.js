@@ -1,4 +1,5 @@
 import { lazy, Suspense } from "react";
+import { useAuth } from "./hooks/useAuth.hook";
 
 const AuthenticatedApp = lazy(() => import("./components/AuthenticatedApp"));
 const UnAuthenticatedApp = lazy(() =>
@@ -6,7 +7,13 @@ const UnAuthenticatedApp = lazy(() =>
 );
 
 function App() {
-  const user = false;
+  const { user } = useAuth();
+
+  console.log("USER::", user);
+
+  if (user === null) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="App">
