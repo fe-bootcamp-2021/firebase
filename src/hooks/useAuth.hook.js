@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
 import firebase from "../libs/firebase.libs";
+import { addUser } from "../services/user.services";
 
 const authContext = createContext();
 
@@ -39,7 +40,7 @@ function useProvideAuth() {
       .createUserWithEmailAndPassword(email, password)
       .then((response) => {
         response.user.sendEmailVerification();
-
+        addUser({ email, password, uid: response.user.uid });
         setUser(response.user);
         return response.user;
       });
